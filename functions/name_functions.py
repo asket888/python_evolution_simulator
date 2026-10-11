@@ -23,4 +23,4 @@ def next_gen_org_name_template(gen, org):
 
 
 def _now():
-    return datetime.now().strftime(' %Y-%m-%d %H:%M:%S')
+    return datetime.now().strftime(' %Y-%m-%d %H-%M-%S')

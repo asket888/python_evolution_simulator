@@ -2,9 +2,12 @@
 This application shows how machine learning could be used for simple organisms behavior simulation.
 
 # Command line Execution:
+Requires Python 3.12+.
+
 1. navigate to application directory
-2. run `$ pipenv install` to setup all necessary dependencies from Pipfile.lock
-3. run `$ pipenv shell` to be able use all pipenv dependencies from terminal
-4. to run application use command `$ python run.py`
+2. run `$ pip install -r requirements.txt` to install all necessary dependencies
+3. to run application use command `$ python run.py`
+
+Results (fitness chart and generation gifs) are saved to the `results` folder.
 
 ![Screenshot](screenshot.gif)
