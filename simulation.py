@@ -1,4 +1,5 @@
-from numpy.random import shuffle, np
+import numpy as np
+from numpy.random import shuffle
 from termcolor import colored
 from tqdm import tqdm
 
