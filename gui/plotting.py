@@ -37,6 +37,7 @@ def plot_frame(settings, predators, organisms, foods, gen, time):
     pyplot.figtext(0.025, 0.90, r'TICK: ' + str(time))
 
     pyplot.savefig(frame_img_name_template(gen, time), dpi=120)
+    pyplot.close(fig)
 
 
 def plot_stats(settings, gen_stats):

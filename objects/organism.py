@@ -86,3 +86,7 @@ class Organism:
                     self.y = self.y_max
                 else:
                     self.y = self.y_min
+
+            # WALL PENALTY
+            if abs(self.x) >= self.x_max or abs(self.y) >= self.y_max:
+                self.fitness -= settings['org_wall_penalty']
