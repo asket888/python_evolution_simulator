@@ -2,6 +2,10 @@ from functions import maths_functions
 
 
 def behave_on_food(closest_dist, eat_dist, org, food):
+    # dead organisms do not eat; eaten food (waiting for respawn at the end of the tick) is not a target
+    if org.fitness <= 0 or food.energy == 0:
+        return closest_dist
+
     # get the closest food
     food_org_dist = maths_functions.dist_to_food(org, food)
     if food_org_dist < closest_dist:
