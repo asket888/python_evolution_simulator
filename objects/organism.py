@@ -8,6 +8,7 @@ class Organism:
 
         self.max_velocity = settings['org_max_velocity']
         self.velocity_decay_factor = settings['org_momentum']
+        self.thrust = settings['org_thrust']
 
         self.x_max = settings['x_max'] + 1
         self.x_min = settings['x_min'] - 1
@@ -64,11 +65,11 @@ class Organism:
             self.max_velocity = 0
         else:
             # UPDATE VELOCITIES
-            self.x_velocity = float(out[0]) + self.x_velocity * self.velocity_decay_factor
+            self.x_velocity = float(out[0]) * self.thrust + self.x_velocity * self.velocity_decay_factor
             if abs(self.x_velocity) > self.max_velocity:
                 self.x_velocity = self.max_velocity
 
-            self.y_velocity = float(out[1]) + self.y_velocity * self.velocity_decay_factor
+            self.y_velocity = float(out[1]) * self.thrust + self.y_velocity * self.velocity_decay_factor
             if abs(self.y_velocity) > self.max_velocity:
                 self.y_velocity = self.max_velocity
 
@@ -86,3 +87,7 @@ class Organism:
                     self.y = self.y_max
                 else:
                     self.y = self.y_min
+
+            # WALL PENALTY
+            if abs(self.x) >= self.x_max or abs(self.y) >= self.y_max:
+                self.fitness -= settings['org_wall_penalty']

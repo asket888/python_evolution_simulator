@@ -23,7 +23,7 @@ def behave_on_organism(closest_dist, eat_dist, pred, org):
 def behave_on_other_predator(closest_dist, penalty_dist, penalty_value, pred1, pred2):
     # get the closest neighbour
     if pred1 is pred2:
-        pass
+        return closest_dist
     pred_pred_dist = maths_functions.dist_to_neighbour(pred1, pred2)
     if pred_pred_dist < closest_dist:
         closest_dist = pred_pred_dist

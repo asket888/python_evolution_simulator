@@ -5,27 +5,30 @@ def settings():
     settings['name'] = 'universe_26'
 
     # EVOLUTION SETTINGS
-    settings['gens'] = 50                      # number of generations
+    settings['gens'] = 100                     # number of generations
     settings['org_num'] = 30                   # number of organisms
-    settings['food_num'] = 10                  # number of food particles
+    settings['food_num'] = 15                  # number of food particles
     settings['pred_num'] = 2                   # number of predator particles
     settings['elitism_org'] = 0.35             # elitism (percent of population to keep and allow to have children)
     settings['elitism_pred'] = 0.50            # elitism (percent of population to keep and allow to have children)
-    settings['mutate'] = 0.2                   # mutation rate
+    settings['mutate'] = 0.1                   # mutation rate (probability to mutate each weight of a child)
+    settings['mutate_sigma'] = 0.5             # mutation strength (std of gaussian noise added to a weight)
 
     # FOOD SETTINGS
     settings['food_create'] = True             # option to seed food to pool
-    settings['food_energy'] = 1                # food energy
+    settings['food_energy'] = 2                # food energy
 
     # ORGANISM SETTINGS
     settings['org_vision_dist'] = 5            # organism vision distance
-    settings['org_momentum'] = 0.50            # velocity decay factor, so the organisms have momentum
+    settings['org_momentum'] = 0.90            # velocity decay factor, so the organisms have momentum
+    settings['org_thrust'] = 0.2               # how much the network output changes velocity per tick (acceleration)
     settings['org_max_velocity'] = 1.0         # organism maximum speed
     settings['org_start_fitness'] = 5          # organism start energy
-    settings['org_eat_dist'] = 0.075           # food to be eaten distance
+    settings['org_eat_dist'] = 0.15            # food to be eaten distance
     settings['org_org_dist'] = 0.10            # other organism clumping penalty distance
-    settings['org_org_penalty'] = 0.03         # other organism clumping penalty value
-    settings['org_hunger_penalty'] = 0.03      # end of tick hunger penalty value
+    settings['org_org_penalty'] = 0.06         # other organism clumping penalty value
+    settings['org_hunger_penalty'] = 0.07      # end of tick hunger penalty value
+    settings['org_wall_penalty'] = 0.03        # touching arena wall penalty value
 
     # PREDATOR SETTINGS
     settings['pred_create'] = True             # option to seed predator to pool
@@ -52,7 +55,7 @@ def settings():
     settings['onodes'] = 2                     # number of output nodes
 
     # GIF
-    settings['plot_gens'] = [9, 49]            # plot following generations (list(range(10, 100, 10)))
+    settings['plot_gens'] = [9, 49, 99]        # plot following generations (list(range(10, 100, 10)))
     settings['gif_fps'] = 12                   # frames per second
     settings['ts_in_gif'] = settings['ticks']  # gif duration
 
