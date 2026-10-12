@@ -5,9 +5,9 @@ def settings():
     settings['name'] = 'universe_26'
 
     # EVOLUTION SETTINGS
-    settings['gens'] = 50                      # number of generations
+    settings['gens'] = 100                     # number of generations
     settings['org_num'] = 30                   # number of organisms
-    settings['food_num'] = 30                  # number of food particles
+    settings['food_num'] = 15                  # number of food particles
     settings['pred_num'] = 2                   # number of predator particles
     settings['elitism_org'] = 0.35             # elitism (percent of population to keep and allow to have children)
     settings['elitism_pred'] = 0.50            # elitism (percent of population to keep and allow to have children)
@@ -25,8 +25,8 @@ def settings():
     settings['org_start_fitness'] = 5          # organism start energy
     settings['org_eat_dist'] = 0.15            # food to be eaten distance
     settings['org_org_dist'] = 0.10            # other organism clumping penalty distance
-    settings['org_org_penalty'] = 0.03         # other organism clumping penalty value
-    settings['org_hunger_penalty'] = 0.055     # end of tick hunger penalty value
+    settings['org_org_penalty'] = 0.06         # other organism clumping penalty value
+    settings['org_hunger_penalty'] = 0.07      # end of tick hunger penalty value
     settings['org_wall_penalty'] = 0.03        # touching arena wall penalty value
 
     # PREDATOR SETTINGS
@@ -54,7 +54,7 @@ def settings():
     settings['onodes'] = 2                     # number of output nodes
 
     # GIF
-    settings['plot_gens'] = [9, 41]            # plot following generations (list(range(10, 100, 10)))
+    settings['plot_gens'] = [9, 49, 99]        # plot following generations (list(range(10, 100, 10)))
     settings['gif_fps'] = 12                   # frames per second
     settings['ts_in_gif'] = settings['ticks']  # gif duration
 
