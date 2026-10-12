@@ -20,7 +20,8 @@ def settings():
 
     # ORGANISM SETTINGS
     settings['org_vision_dist'] = 5            # organism vision distance
-    settings['org_momentum'] = 0.50            # velocity decay factor, so the organisms have momentum
+    settings['org_momentum'] = 0.90            # velocity decay factor, so the organisms have momentum
+    settings['org_thrust'] = 0.2               # how much the network output changes velocity per tick (acceleration)
     settings['org_max_velocity'] = 1.0         # organism maximum speed
     settings['org_start_fitness'] = 5          # organism start energy
     settings['org_eat_dist'] = 0.15            # food to be eaten distance
