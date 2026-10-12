@@ -11,7 +11,8 @@ def settings():
     settings['pred_num'] = 2                   # number of predator particles
     settings['elitism_org'] = 0.35             # elitism (percent of population to keep and allow to have children)
     settings['elitism_pred'] = 0.50            # elitism (percent of population to keep and allow to have children)
-    settings['mutate'] = 0.2                   # mutation rate
+    settings['mutate'] = 0.1                   # mutation rate (probability to mutate each weight of a child)
+    settings['mutate_sigma'] = 0.5             # mutation strength (std of gaussian noise added to a weight)
 
     # FOOD SETTINGS
     settings['food_create'] = True             # option to seed food to pool

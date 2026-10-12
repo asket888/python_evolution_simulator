@@ -2,10 +2,9 @@ import operator
 
 from numpy import floor
 
-from numpy.random import randint
 from numpy.random import random
 from numpy.random import choice
-from numpy.random import uniform
+from numpy.random import normal
 
 from functions.name_functions import next_gen_org_name_template
 from objects.organism import Organism
@@ -94,23 +93,8 @@ def _calculate_child_mutations(settings, org_1, org_2):
     wih_new = (crossover_weight * org_1.wih) + ((1 - crossover_weight) * org_2.wih)
     who_new = (crossover_weight * org_1.who) + ((1 - crossover_weight) * org_2.who)
 
-    # mutation
-    mutate = random()
-    if mutate <= settings['mutate']:
-
-        # pick which weight matrix to mutate
-        mat_pick = randint(0, 2)
-
-        # mutate: wih weights
-        if mat_pick == 0:
-            index_row = randint(0, settings['hnodes'])
-            index_col = randint(0, settings['inodes'])
-            wih_new[index_row][index_col] = wih_new[index_row][index_col] * uniform(0.9, 1.1)
-
-        # mutate: who weights
-        if mat_pick == 1:
-            index_row = randint(0, settings['onodes'])
-            index_col = randint(0, settings['hnodes'])
-            who_new[index_row][index_col] = who_new[index_row][index_col] * uniform(0.9, 1.1)
+    # mutation: each weight is mutated with 'mutate' probability by adding gaussian noise
+    wih_new = wih_new + (random(wih_new.shape) < settings['mutate']) * normal(0, settings['mutate_sigma'], wih_new.shape)
+    who_new = who_new + (random(who_new.shape) < settings['mutate']) * normal(0, settings['mutate_sigma'], who_new.shape)
 
     return wih_new, who_new
