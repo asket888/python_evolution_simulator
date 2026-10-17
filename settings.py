@@ -8,7 +8,7 @@ def settings():
     settings['gens'] = 100                     # number of generations
     settings['org_num'] = 30                   # number of organisms
     settings['food_num'] = 15                  # number of food particles
-    settings['pred_num'] = 2                   # number of predator particles
+    settings['pred_num'] = 4                   # number of predators
     settings['elitism_org'] = 0.35             # elitism (percent of population to keep and allow to have children)
     settings['elitism_pred'] = 0.50            # elitism (percent of population to keep and allow to have children)
     settings['mutate'] = 0.1                   # mutation rate (probability to mutate each weight of a child)
@@ -32,25 +32,32 @@ def settings():
 
     # PREDATOR SETTINGS
     settings['pred_create'] = True             # option to seed predator to pool
-    settings['pred_vision_dist'] = 10          # organism vision distance
-    settings['pred_momentum'] = 0.80           # velocity decay factor, so the organisms have momentum
-    settings['pred_max_velocity'] = 0.5        # organism maximum speed
+    settings['pred_vision_dist'] = 10          # predator vision distance
+    settings['pred_momentum'] = 0.8125         # velocity decay factor: predators are slower but more agile (ambush)
+    settings['pred_thrust'] = 0.3              # how much the network output changes velocity per tick (acceleration)
+    settings['pred_max_velocity'] = 0.8        # predator maximum speed (herbivores: 1.0)
     settings['pred_start_fitness'] = 7         # predator start energy
-    settings['pred_eat_dist'] = 0.10           # organism to be eaten distance
+    settings['pred_eat_dist'] = 0.10           # distance to kill a living organism (from the predator's path)
+    settings['pred_body_eat_dist'] = 0.20      # distance to eat a dead body (from the predator's path)
+    settings['pred_carrion_energy'] = 6        # energy for eating a dead organism (killed by a predator or died itself)
+    settings['pred_body_priority'] = 'always'  # no hunting while a body is in sight: 'always' or 'closer' (body closer than prey)
     settings['pred_pred_dist'] = 0.20          # other predator clumping penalty distance
     settings['pred_pred_penalty'] = 0.20       # other predator clumping penalty value
-    settings['pred_hunger_penalty'] = 0.10     # end of tick hunger penalty value
+    settings['pred_hunger_penalty'] = 0.07     # end of tick hunger penalty value
+    settings['pred_wall_penalty'] = 0.03       # touching arena wall penalty value
 
     # SIMULATION SETTINGS
     settings['seed'] = 333                     # for reproducibility
     settings['ticks'] = 100                    # time steps in a generation
+    settings['corpse_momentum'] = 0.7          # dead bodies drift by inertia and slow down by this factor per tick
     settings['x_min'] = -3.0                   # arena western border
     settings['x_max'] = 3.0                    # arena eastern border
     settings['y_min'] = -3.0                   # arena southern border
     settings['y_max'] = 3.0                    # arena northern border
 
     # NEURAL NETWORK SETTINGS
-    settings['inodes'] = 6                     # number of input nodes
+    settings['org_inodes'] = 8                 # herbivore inputs: velocity, food, neighbour, predator (x, y each)
+    settings['pred_inodes'] = 8                # predator inputs: velocity, prey, neighbour, carrion (x, y each)
     settings['hnodes'] = 5                     # number of hidden nodes
     settings['onodes'] = 2                     # number of output nodes
 

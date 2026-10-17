@@ -74,7 +74,7 @@ def _calculate_new_pred_generation(settings, gen, old_generation, ancestors_num,
     # generate children of best organisms from previous generation
     for pred in range(0, descendants_num):
         all_parents_candidates = range(0, ancestors_num)
-        random_parents_indexes = choice(a=all_parents_candidates, size=2, replace=True)
+        random_parents_indexes = choice(a=all_parents_candidates, size=2, replace=ancestors_num < 2)
         pred_1 = sorted_old_generation[random_parents_indexes[0]]
         pred_2 = sorted_old_generation[random_parents_indexes[1]]
 

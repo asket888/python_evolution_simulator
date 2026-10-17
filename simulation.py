@@ -19,7 +19,7 @@ def simulate_all_generations(settings):
     predators, organisms, foods = _simulate_environment(settings)
     for gen in range(0, settings['gens']):
         predators, organisms = _simulate_one_generation(settings, predators, organisms, foods, gen)
-        stats = gui.get_generation_stats(organisms)
+        stats = gui.get_generation_stats(organisms, predators)
         gen_stats.append(stats)
 
         organisms = evolve_organisms(settings, organisms, gen)
@@ -41,7 +41,7 @@ def _simulate_environment(settings):
 
     organisms = []
     for org in range(0, settings['org_num']):
-        wih_init = np.random.uniform(-1, 1, (settings['hnodes'], settings['inodes']))  # mlp weights (input -> hidden)
+        wih_init = np.random.uniform(-1, 1, (settings['hnodes'], settings['org_inodes']))  # mlp weights (input -> hidden)
         who_init = np.random.uniform(-1, 1, (settings['onodes'], settings['hnodes']))  # mlp weights (hidden -> output)
 
         organisms.append(Organism(settings, wih_init, who_init, name=first_gen_org_name_template(org)))
@@ -50,7 +50,7 @@ def _simulate_environment(settings):
     if settings['pred_create']:
         for pred in range(0, settings['pred_num']):
             wih_init = np.random.uniform(-1, 1,
-                                         (settings['hnodes'], settings['inodes']))  # mlp weights (input -> hidden)
+                                         (settings['hnodes'], settings['pred_inodes']))  # mlp weights (input -> hidden)
             who_init = np.random.uniform(-1, 1,
                                          (settings['onodes'], settings['hnodes']))  # mlp weights (hidden -> output)
 
@@ -78,13 +78,11 @@ def _simulate_one_generation(settings, predators, organisms, foods, gen):
                                                                 settings['org_eat_dist'],
                                                                 org1,
                                                                 food)
-            # action on closest predator
+            # sense closest predator (no predator visible -> zero input)
+            org1.x_distance_to_predator, org1.y_distance_to_predator = 0, 0
             closest_dist = org_vision
             for pred in predators:
-                closest_dist = organism_behavior.behave_on_predator(closest_dist,
-                                                                    settings['pred_eat_dist'],
-                                                                    org1,
-                                                                    pred)
+                closest_dist = organism_behavior.behave_on_predator(closest_dist, org1, pred)
             # action on closest other organism
             closest_dist = org_vision
             for org2 in organisms:
@@ -96,12 +94,29 @@ def _simulate_one_generation(settings, predators, organisms, foods, gen):
         pred_vision = settings['pred_vision_dist']
         for pred1 in predators:
 
-            closest_dist = pred_vision
+            # look around: closest prey and closest body (nothing visible -> zero input)
+            pred1.x_distance_to_food, pred1.y_distance_to_food = 0, 0
+            pred1.x_distance_to_carrion, pred1.y_distance_to_carrion = 0, 0
+            closest_prey, closest_carrion = pred_vision, pred_vision
             for org in organisms:
-                closest_dist = predator_behavior.behave_on_organism(closest_dist,
-                                                                    settings['pred_eat_dist'],
-                                                                    pred1,
-                                                                    org)
+                closest_prey, closest_carrion = predator_behavior.sense_organism(closest_prey, closest_carrion, pred1, org)
+
+            # a body in sight has priority: the predator does not hunt (no kills, prey is not a target);
+            # 'closer' mode: only when the body is closer than any living prey
+            hunting = closest_carrion >= pred_vision
+            if settings['pred_body_priority'] == 'closer':
+                hunting = hunting or closest_prey < closest_carrion
+            if not hunting:
+                pred1.x_distance_to_food, pred1.y_distance_to_food = 0, 0
+
+            # kill (only when hunting) and eat bodies
+            for org in organisms:
+                predator_behavior.touch_organism(hunting,
+                                                 settings['pred_eat_dist'],
+                                                 settings['pred_body_eat_dist'],
+                                                 settings['pred_carrion_energy'],
+                                                 pred1,
+                                                 org)
             closest_dist = pred_vision
             for pred2 in predators:
                 closest_dist = predator_behavior.behave_on_other_predator(closest_dist,
