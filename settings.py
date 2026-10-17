@@ -62,5 +62,6 @@ def settings():
 
     # GIF
     settings['plot_gens'] = [9, 49, 99]        # plot following generations (list(range(10, 100, 10)))
+    settings['gif_fps'] = 10                   # gif speed, frames (ticks) per second
 
     return settings
