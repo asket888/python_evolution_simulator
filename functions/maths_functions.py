@@ -18,15 +18,15 @@ def xy_dist_to_food(org, food):
     return xy_dist(food.x, org.x, food.y, org.y)
 
 
-def path_dist_to_food(org, food):
-    # closest distance from food to the path travelled during the last tick (tail -> current position)
-    path_x, path_y = org.x - org.x_tail, org.y - org.y_tail
+def path_dist(mover, target):
+    # closest distance from target (food or prey) to the path travelled by mover during the last tick (tail -> position)
+    path_x, path_y = mover.x - mover.x_tail, mover.y - mover.y_tail
     path_len_sq = path_x ** 2 + path_y ** 2
     if path_len_sq == 0:
-        return dist_to_food(org, food)
-    t = ((food.x - org.x_tail) * path_x + (food.y - org.y_tail) * path_y) / path_len_sq
+        return dist(target.x, mover.x, target.y, mover.y)
+    t = ((target.x - mover.x_tail) * path_x + (target.y - mover.y_tail) * path_y) / path_len_sq
     t = min(max(t, 0), 1)
-    return dist(food.x, org.x_tail + t * path_x, food.y, org.y_tail + t * path_y)
+    return dist(target.x, mover.x_tail + t * path_x, target.y, mover.y_tail + t * path_y)
 
 
 def dist_to_neighbour(org1, org2):
@@ -38,11 +38,11 @@ def xy_dist_to_neighbour(org1, org2):
 
 
 def dist_to_predator(org, pred):
-    return dist(pred.x_tail, org.x, pred.y_tail, org.y)
+    return dist(pred.x, org.x, pred.y, org.y)
 
 
 def xy_dist_to_predator(org, pred):
-    return xy_dist(pred.x_tail, org.x, pred.y_tail, org.y)
+    return xy_dist(pred.x, org.x, pred.y, org.y)
 
 
 # predator math
