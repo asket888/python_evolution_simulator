@@ -102,6 +102,7 @@ All parameters are in [settings.py](settings.py). The most interesting ones:
 | `hnodes` | 5 | hidden neurons |
 | `seed` | 333 | random seed: the same seed gives the same run |
 | `plot_gens` | [9, 49, 99] | generations to save as gifs (0-based: 9 is generation 10) |
+| `gif_fps` | 10 | gif speed, frames (ticks) per second; gifs loop forever |
 
 ## Project structure
 
