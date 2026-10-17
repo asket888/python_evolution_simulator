@@ -15,7 +15,6 @@ def settings():
     settings['mutate_sigma'] = 0.5             # mutation strength (std of gaussian noise added to a weight)
 
     # FOOD SETTINGS
-    settings['food_create'] = True             # option to seed food to pool
     settings['food_energy'] = 2                # food energy
 
     # ORGANISM SETTINGS
@@ -63,7 +62,5 @@ def settings():
 
     # GIF
     settings['plot_gens'] = [9, 49, 99]        # plot following generations (list(range(10, 100, 10)))
-    settings['gif_fps'] = 12                   # frames per second
-    settings['ts_in_gif'] = settings['ticks']  # gif duration
 
     return settings
