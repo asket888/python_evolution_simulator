@@ -1,4 +1,4 @@
-# Universe 26 evolution simulator
+# Evolution simulator
 
 An aquarium where herbivores and predators learn to survive. Every creature is controlled by a tiny neural network,
 and the networks are improved by a genetic algorithm: nobody programs the behaviour, it evolves from generation to generation.
